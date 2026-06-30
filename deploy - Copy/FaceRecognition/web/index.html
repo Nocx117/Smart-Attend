@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Smart Attendance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="mobile-app gradient-bg">
+        <div class="header-section" style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+                <h1>Smart<br>Attendance</h1>
+                <p>Silakan pilih menu di bawah ini</p>
+            </div>
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo Polnep" style="width: 65px; height: auto; filter: drop-shadow(0 4px 15px rgba(0,0,0,0.2));">
+        </div>
+        
+        <div class="menu-section">
+            <a href="/reg" class="menu-btn card-reg">
+                <div class="menu-icon"><i class="fa-solid fa-user-plus"></i></div>
+                <div class="menu-text">
+                    <h3>Pendaftaran Baru</h3>
+                    <p>Daftarkan wajah mahasiswa</p>
+                </div>
+            </a>
+            
+            <a href="/absen" class="menu-btn card-abs">
+                <div class="menu-icon"><i class="fa-solid fa-camera"></i></div>
+                <div class="menu-text">
+                    <h3>Verifikasi Absen</h3>
+                    <p>Lakukan absensi harian</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

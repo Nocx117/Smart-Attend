@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pendaftaran Mahasiswa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="mobile-app light-bg">
+        <div class="app-header">
+            <a href="/" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+            <h2>Pendaftaran</h2>
+        </div>
+        
+        <div class="content-section">
+            <form action="/reg" method="POST" enctype="multipart/form-data">
+            <label>Nama Lengkap:</label><br />
+            <input type="text" name="nama" required /><br /><br />
+
+            <label>NIM (Nomor Induk Mahasiswa):</label><br />
+            <input type="text" name="nim" required /><br /><br />
+
+            <label>Kelas:</label><br />
+            <input type="text" name="kelas" required /><br /><br />
+
+            <label>Unggah Foto Wajah</label><br />
+            <input type="hidden" name="foto" id="foto-hidden" />
+
+            
+            <div
+                id="camera-wrapper"
+                style="
+                    position: relative;
+                    width: 100%;
+                    max-width: 320px;
+                    aspect-ratio: 1 / 1;
+                    overflow: hidden;
+                    border-radius: 8px;
+                    background: #000;
+                "
+            >
+                <video
+                    id="video"
+                    autoplay
+                    playsinline
+                    style="
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover; /* ← ini yang cegah stretch */
+                    "
+                ></video>
+
+                <canvas
+                    id="canvas"
+                    style="
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        display: none;
+                    "
+                ></canvas>
+            </div>
+
+            <div style="margin-top: 8px; display: flex; gap: 8px">
+                <button type="button" id="btn-capture"><i class="fa-solid fa-camera"></i> Ambil Foto</button>
+                <button type="button" id="btn-retake" style="display: none">
+                    <i class="fa-solid fa-rotate-right"></i> Ulangi
+                </button>
+            </div>
+
+                <button type="submit" class="submit-btn">Daftarkan Sekarang</button>
+            </form>
+        </div>
+    </div>
+    <script>
+            const video = document.getElementById("video");
+            const canvas = document.getElementById("canvas");
+            const btnCapture = document.getElementById("btn-capture");
+            const btnRetake = document.getElementById("btn-retake");
+
+            let capturedBlob = null;
+
+            // Aktifkan kamera
+            navigator.mediaDevices
+                .getUserMedia({ video: { facingMode: "user" }, audio: false })
+                .then((stream) => {
+                    video.srcObject = stream;
+                })
+                .catch((err) => {
+                    alert("Kamera tidak bisa diakses: " + err.message);
+                });
+
+            
+            btnCapture.addEventListener("click", () => {
+                const vw = video.videoWidth;
+                const vh = video.videoHeight;
+
+                
+                const size = Math.min(vw, vh);
+                const sx = (vw - size) / 2;
+                const sy = (vh - size) / 2;
+
+                
+                canvas.width = size;
+                canvas.height = size;
+
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(video, sx, sy, size, size, 0, 0, size, size);
+
+                canvas.style.display = "block";
+                video.style.display = "none";
+                btnCapture.style.display = "none";
+                btnRetake.style.display = "inline-block";
+
+                canvas.toBlob(
+                    (blob) => {
+                        capturedBlob = blob;
+                    },
+                    "image/jpeg",
+                    0.9,
+                );
+            });
+
+            
+            btnRetake.addEventListener("click", () => {
+                capturedBlob = null;
+                canvas.style.display = "none";
+                video.style.display = "block";
+                btnCapture.style.display = "inline-block";
+                btnRetake.style.display = "none";
+            });
+
+            
+            document
+                .querySelector("form")
+                .addEventListener("submit", async (e) => {
+                    e.preventDefault();
+
+                    if (!capturedBlob) {
+                        alert("Silakan ambil foto terlebih dahulu!");
+                        return;
+                    }
+
+                    const formData = new FormData(e.target);
+                    formData.delete("foto");
+                    formData.append("foto", capturedBlob, "foto.jpg");
+
+                    try {
+                        const res = await fetch("/reg", {
+                            method: "POST",
+                            body: formData,
+                        });
+                        const text = await res.text();
+                        document.open();
+                        document.write(text);
+                        document.close();
+                    } catch (err) {
+                        alert("Gagal mengirim: " + err.message);
+                    }
+                });
+        </script>
+    </body>
+</html>

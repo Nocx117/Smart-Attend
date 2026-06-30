@@ -1,0 +1,42 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: sip12345
+      MYSQL_DATABASE: data_absen
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./FaceRecognition/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-psip12345"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  app:
+    build:
+      context: .
+      dockerfile: FaceRecognition/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      MYSQL_HOST: db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: sip12345
+      MYSQL_DATABASE: data_absen
+      SPOOFING_DEVICE_ID: "0"
+      FLASK_DEBUG: "false"
+    volumes:
+      - app_uploads:/app/FaceRecognition/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  mysql_data:
+  app_uploads:

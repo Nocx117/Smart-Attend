@@ -1,0 +1,295 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Roboto+Slab:wght@400;500;600;700&display=swap');
+
+:root {
+    --primary: #5B4EFA;
+    --primary-dark: #4A3BCC;
+    --bg-desktop: #E3EAF2;
+    --bg-mobile-light: #F4F7FB;
+    --text-dark: #2D3142;
+    --text-gray: #9098B1;
+    --white: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Slab', serif;
+}
+
+h1, h2, h3, h4, h5, h6, .menu-text h3 {
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+body {
+    background-color: var(--bg-desktop);
+    color: var(--text-dark);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Untuk HP, mulai dari atas */
+}
+
+/* Container utama ala HP */
+.mobile-app {
+    width: 100%;
+    max-width: 414px; /* Lebar maksimal layaknya HP besar */
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* Responsif untuk desktop: buat efek HP (bingkai) */
+@media (min-width: 500px) {
+    body {
+        align-items: center; /* Di tengah vertikal pada desktop */
+        padding: 40px 0;
+    }
+    .mobile-app {
+        min-height: 850px;
+        height: 850px;
+        border-radius: 40px;
+        box-shadow: 0 25px 60px rgba(0,0,0,0.15), 
+                    inset 0 0 0 8px #ffffff, /* frame HP putih */
+                    inset 0 0 0 9px #e0e0e0; /* border halus frame */
+    }
+}
+
+/* --- TEMA: GRADIENT BACKGROUND (Untuk Index) --- */
+.gradient-bg {
+    background: linear-gradient(145deg, rgba(15, 15, 30, 0.75) 0%, rgba(5, 5, 15, 0.9) 100%),
+                url('bg-gedung.jpg') center/cover no-repeat;
+    color: var(--white);
+}
+
+.gradient-bg .header-section {
+    padding: 60px 30px 40px;
+}
+
+.gradient-bg .header-section h1 {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 12px;
+}
+
+.gradient-bg .header-section p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.menu-section {
+    padding: 0 24px;
+}
+
+.menu-btn {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    padding: 20px;
+    margin-bottom: 16px;
+    text-decoration: none;
+    color: var(--white);
+    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.menu-btn:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Color for Pendaftaran (reg) */
+.menu-btn.card-reg {
+    background: linear-gradient(135deg, rgba(255, 117, 140, 0.15), rgba(255, 126, 179, 0.15));
+    border: 1px solid rgba(255, 117, 140, 0.3);
+}
+.menu-btn.card-reg .menu-icon {
+    background: linear-gradient(135deg, #FF758C, #FF7EB3);
+    color: white;
+    box-shadow: 0 8px 20px rgba(255, 117, 140, 0.4);
+}
+.menu-btn.card-reg:hover {
+    background: linear-gradient(135deg, rgba(255, 117, 140, 0.25), rgba(255, 126, 179, 0.25));
+    box-shadow: 0 8px 32px rgba(255, 117, 140, 0.2);
+}
+
+/* Color for Verifikasi Absen (abs) */
+.menu-btn.card-abs {
+    background: linear-gradient(135deg, rgba(0, 198, 251, 0.15), rgba(0, 91, 234, 0.15));
+    border: 1px solid rgba(0, 198, 251, 0.3);
+}
+.menu-btn.card-abs .menu-icon {
+    background: linear-gradient(135deg, #00C6FB, #005BEA);
+    color: white;
+    box-shadow: 0 8px 20px rgba(0, 198, 251, 0.4);
+}
+.menu-btn.card-abs:hover {
+    background: linear-gradient(135deg, rgba(0, 198, 251, 0.25), rgba(0, 91, 234, 0.25));
+    box-shadow: 0 8px 32px rgba(0, 198, 251, 0.2);
+}
+
+.menu-icon {
+    font-size: 28px;
+    background: rgba(255, 255, 255, 0.2);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 18px;
+    margin-right: 16px;
+}
+
+.menu-text h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.menu-text p {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+
+/* --- TEMA: LIGHT BACKGROUND (Untuk Form) --- */
+.light-bg {
+    background: linear-gradient(135deg, rgba(248, 250, 252, 0.85) 0%, rgba(236, 233, 255, 0.95) 100%),
+                url('bg-gedung.jpg') center/cover fixed no-repeat;
+    color: var(--text-dark);
+}
+
+.app-header {
+    display: flex;
+    align-items: center;
+    padding: 50px 24px 30px;
+    gap: 20px;
+}
+
+.back-btn {
+    text-decoration: none;
+    color: var(--primary-dark);
+    font-size: 20px;
+    font-weight: 600;
+    background: var(--white);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(91, 78, 250, 0.15);
+    transition: transform 0.2s;
+}
+
+.back-btn:hover {
+    transform: scale(1.05);
+}
+
+.app-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.content-section {
+    padding: 0 24px 40px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+input[type="text"] {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 2px solid #FFFFFF;
+    padding: 18px 20px;
+    border-radius: 18px;
+    font-size: 15px;
+    color: var(--text-dark);
+    box-shadow: 0 8px 30px rgba(91, 78, 250, 0.05);
+    margin-bottom: 24px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border: 2px solid #8278FF;
+    background: var(--white);
+    box-shadow: 0 8px 25px rgba(91, 78, 250, 0.15);
+}
+
+/* Custom styling for Camera Wrapper */
+#camera-wrapper {
+    border-radius: 24px !important;
+    border: 4px solid #FFFFFF !important;
+    box-shadow: 0 15px 35px rgba(91, 78, 250, 0.15) !important;
+    background: #000; /* fall back if camera off */
+    margin: 0 auto 24px auto !important; /* Membuat kamera ke tengah */
+    display: block;
+}
+
+/* Tombol Kamera Tambahan */
+#btn-capture, #btn-retake {
+    background: #F0EFFF;
+    color: var(--primary-dark);
+    border: none;
+    padding: 16px;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 15px;
+    flex: 1;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(91, 78, 250, 0.1);
+    transition: all 0.2s;
+}
+
+#btn-capture:hover, #btn-retake:hover {
+    background: #E4E1FF;
+    transform: translateY(-2px);
+}
+
+/* Tombol Submit Utama */
+.submit-btn {
+    background: linear-gradient(135deg, #7A6FFA 0%, #4A3BCC 100%);
+    color: var(--white);
+    border: none;
+    padding: 18px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 24px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(91, 78, 250, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(91, 78, 250, 0.4);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* Hide br tags left over from simple layout */
+form > br {
+    display: none;
+}
